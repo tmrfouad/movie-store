@@ -1,0 +1,22 @@
+<a mat-button id="btnAddMovie" [routerLink]="['/movie']">Add Movie</a>
+<mat-grid-list cols="3" rowHeight="1:1">
+    <mat-grid-tile *ngFor="let movie of movies">
+      <mat-card class="movie-card">
+        <mat-card-header>
+          <div mat-card-avatar class="movie-header-image"></div>
+          <mat-card-title>{{ movie.name }}</mat-card-title>
+          <mat-card-subtitle>{{ movie.year }}</mat-card-subtitle>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST7qsVlHPBGfX50rdAAZKU0jbuS6xlI1CWJKFaLlaC9Rci590Kyg"
+          [alt]="movie.name"
+        />
+        <mat-card-content>
+          <p>
+            {{ movie.budget }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>

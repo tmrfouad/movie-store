@@ -1,0 +1,9 @@
+.movie-card {
+    width: 100%;
+    margin: 10px;
+  }
+  
+  .movie-header-image {
+    background-image: url('https://live.staticflickr.com/8367/8594230965_4bc7b5222c.jpg');
+    background-size: cover;
+  }

@@ -10,11 +10,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppComponent } from './app.component';
 import { MoviesService } from './services/movies.service';
+import { AppRoutingModule } from './app-routing.module';
+import { MoviesComponent } from './components/movies/movies.component';
+import { MovieEditComponent } from './components/movie-edit/movie-edit.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MoviesComponent, MovieEditComponent],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
