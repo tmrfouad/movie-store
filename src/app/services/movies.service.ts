@@ -1,44 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Movie } from '../models/movie';
+import { Injectable } from "@angular/core";
+import { Movie } from "../models/movie";
+import { environment } from "src/environments/environment";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class MoviesService {
-  constructor() {}
+  baseUrl: string;
 
-  getAll(): Movie[] {
-    const movies = JSON.parse(localStorage.getItem('movies')) as Movie[];
-    return movies || [];
+  constructor(private http: HttpClient) {
+    this.baseUrl = environment.baseUrl;
   }
 
-  get(name: string): Movie {
-    const movies = JSON.parse(localStorage.getItem('movies')) as Movie[];
-    return (movies || []).find(m => m.name === name);
+  getAll(): Observable<Movie[]> {
+    return this.http.get<Movie[]>(`${this.baseUrl}movies`);
   }
 
-  post(movie: Movie): void {
-    const movies = (JSON.parse(localStorage.getItem('movies')) ||
-      []) as Movie[];
-    movies.push(movie);
-    localStorage.setItem('movies', JSON.stringify(movies));
+  get(id: number): Observable<Movie> {
+    return this.http.get<Movie>(`${this.baseUrl}movies/${id}`);
   }
 
-  update(updates: Movie): void {
-    const movies = (JSON.parse(localStorage.getItem('movies')) ||
-      []) as Movie[];
-    movies.splice(
-      movies.indexOf(movies.find(m => m.name === updates.name)),
-      1,
-      updates
-    );
-    localStorage.setItem('movies', JSON.stringify(movies));
+  post(movie: Movie): Observable<Object> {
+    return this.http.post(`${this.baseUrl}movies`, movie);
   }
 
-  delete(name: string): void {
-    const movies = (JSON.parse(localStorage.getItem('movies')) ||
-      []) as Movie[];
-    movies.splice(movies.indexOf(movies.find(m => m.name === name)), 1);
-    localStorage.setItem('movies', JSON.stringify(movies));
+  update(id: number, updates: Movie): Observable<Object> {
+    return this.http.put(`${this.baseUrl}movies/${id}`, updates);
+  }
+  
+  delete(id: number): Observable<Object> {
+    return this.http.delete(`${this.baseUrl}movies/${id}`);
   }
 }

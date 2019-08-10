@@ -1,32 +1,52 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AppComponent } from './app.component';
 import { MoviesService } from './services/movies.service';
 import { AppRoutingModule } from './app-routing.module';
-import { MoviesComponent } from './components/movies/movies.component';
+import {
+  MoviesComponent,
+  ConfirmRemoveDialog
+} from './components/movies/movies.component';
 import { MovieEditComponent } from './components/movie-edit/movie-edit.component';
+import { CategoriesService } from './services/categories.service';
 
 @NgModule({
-  declarations: [AppComponent, MoviesComponent, MovieEditComponent],
+  declarations: [
+    AppComponent,
+    MoviesComponent,
+    MovieEditComponent,
+    ConfirmRemoveDialog
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatInputModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSelectModule
   ],
-  providers: [MoviesService],
+  entryComponents: [ConfirmRemoveDialog],
+  providers: [MoviesService, CategoriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

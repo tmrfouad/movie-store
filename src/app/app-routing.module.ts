@@ -7,6 +7,7 @@ import { MovieEditComponent } from './components/movie-edit/movie-edit.component
 
 const routes: Routes = [
   {path: '', component: MoviesComponent},
+  {path: 'movie/:id', component: MovieEditComponent},
   {path: 'movie', component: MovieEditComponent}
 
 ];
