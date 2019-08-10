@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
-import { Movie } from "../models/movie";
-import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Movie } from '../models/movie';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class MoviesService {
   baseUrl: string;
@@ -22,6 +22,12 @@ export class MoviesService {
     return this.http.get<Movie>(`${this.baseUrl}movies/${id}`);
   }
 
+  search(text: string): Observable<Movie[]> {
+    let params = new HttpParams();
+    if (text) params = params.set('search', text);
+    return this.http.get<Movie[]>(`${this.baseUrl}movies`, { params });
+  }
+
   post(movie: Movie): Observable<Object> {
     return this.http.post(`${this.baseUrl}movies`, movie);
   }
@@ -29,7 +35,7 @@ export class MoviesService {
   update(id: number, updates: Movie): Observable<Object> {
     return this.http.put(`${this.baseUrl}movies/${id}`, updates);
   }
-  
+
   delete(id: number): Observable<Object> {
     return this.http.delete(`${this.baseUrl}movies/${id}`);
   }

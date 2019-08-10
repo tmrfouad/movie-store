@@ -1,9 +1,21 @@
 <a mat-button id="btnAddMovie" [routerLink]="['/movie']">Add Movie</a>
+<mat-form-field class="search-input">
+  <input matInput placeholder="Search" #txtSearch [(ngModel)]="textFilter" />
+</mat-form-field>
+<mat-form-field class="search-input">
+  <mat-label>Year</mat-label>
+  <mat-select [(ngModel)]="yearFilter" (selectionChange)="applyYearFilters()">
+    <mat-option value="">All</mat-option>
+    <mat-option *ngFor="let year of years" [value]="year">{{
+      year
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>
-<mat-grid-list cols="3" rowHeight="1:2" *ngIf="movies; else loading">
-  <mat-grid-tile *ngFor="let movie of movies">
+<mat-grid-list cols="3" rowHeight="1:2" *ngIf="!isLoading; else loading">
+  <mat-grid-tile *ngFor="let movie of filteredMovies">
     <mat-card class="movie-card">
       <mat-card-header>
         <div mat-card-avatar class="movie-header-image"></div>
