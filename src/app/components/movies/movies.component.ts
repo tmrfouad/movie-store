@@ -5,7 +5,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { Category } from 'src/app/models/category';
 import { switchMap, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -15,8 +14,8 @@ import { Observable } from 'rxjs';
 export class MoviesComponent implements OnInit {
   // public variables
   categories: Category[];
-  movies$: Observable<Movie[]>;
-  
+  movies: Movie[];
+
   constructor(
     private moviesService: MoviesService,
     private categoriesService: CategoriesService,
@@ -24,34 +23,23 @@ export class MoviesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.movies$ = this.categoriesService.getAll().pipe(
-      switchMap(categories => {
-        this.categories = categories;
-        return this.moviesService.getAll();
-      }),
-      map(movies => {
-        return movies.map(m => ({
-          ...m,
-          categories: m.category_ids.map(cid =>
-            this.categories.find(c => c.id === cid)
-          )
-        }));
-      })
-    );
-
-    // this.categoriesService.getAll().subscribe(categories => {
-    //   this.categories = categories;
-    //   this.moviesService.getAll().subscribe(movies => {
-    //     this.movies = movies.map(m => ({
-    //       ...m,
-    //       categories: m.category_ids.map(cid =>
-    //         categories.find(c => c.id === cid)
-    //       )
-    //     }));
-
-    //     console.log(this.movies);
-    //   });
-    // });
+    this.categoriesService
+      .getAll()
+      .pipe(
+        switchMap(categories => {
+          this.categories = categories;
+          return this.moviesService.getAll();
+        }),
+        map(movies => {
+          this.movies = movies.map(m => ({
+            ...m,
+            categories: m.category_ids.map(cid =>
+              this.categories.find(c => c.id === cid)
+            )
+          }));
+        })
+      )
+      .subscribe();
   }
 
   removeMovie(movie: Movie) {

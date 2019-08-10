@@ -2,7 +2,7 @@
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>
-<mat-grid-list cols="3" rowHeight="1:2" *ngIf="movies$ | async as movies; else loading">
+<mat-grid-list cols="3" rowHeight="1:2" *ngIf="movies; else loading">
   <mat-grid-tile *ngFor="let movie of movies">
     <mat-card class="movie-card">
       <mat-card-header>

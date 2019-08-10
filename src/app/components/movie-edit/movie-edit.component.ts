@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MoviesService } from 'src/app/services/movies.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Movie } from 'src/app/models/movie';
 import { Category } from 'src/app/models/category';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { CategoriesService } from 'src/app/services/categories.service';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -54,6 +52,8 @@ export class MovieEditComponent implements OnInit {
           category_ids: movie.category_ids
         });
       });
+    } else {
+      this.loaded = true;
     }
   }
 
